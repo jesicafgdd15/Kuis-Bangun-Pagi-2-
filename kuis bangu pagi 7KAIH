@@ -1,0 +1,106 @@
+import java.util.Scanner;
+
+public class QuizBangunPagi {
+
+    static Scanner input = new Scanner(System.in);
+    static int skor = 0;
+
+    public static void main(String[] args) {
+        // MULAI -> Halaman Menu
+        boolean pilihanValid = false;
+
+        while (!pilihanValid) {
+            tampilkanMenu();
+            String pilihan = input.nextLine().trim().toLowerCase();
+
+            if (pilihan.equals("1") || pilihan.equals("main")) {
+                pilihanValid = true;
+                jalankanKuis();
+            } else if (pilihan.equals("2") || pilihan.equals("keluar")) {
+                pilihanValid = true;
+            } else {
+                System.out.println("Pilihan tidak valid, silakan coba lagi.\n");
+            }
+        }
+
+        // SELESAI
+        System.out.println("\nSelesai. Terima kasih!");
+        input.close();
+    }
+
+    // Halaman Menu
+    static void tampilkanMenu() {
+        System.out.println("=============================");
+        System.out.println("      KUIS BANGUN PAGI");
+        System.out.println("=============================");
+        System.out.println("1. Main");
+        System.out.println("2. Keluar");
+        System.out.print("Pilih menu: ");
+    }
+
+    // Main -> Pertanyaan 1 sampai 5
+    static void jalankanKuis() {
+        System.out.println("\n--- KUIS DIMULAI ---\n");
+
+        // Pertanyaan 1
+        tanya("1. Apa manfaat utama bangun pagi?",
+                new String[]{"Membuat tubuh malas", "Melatih kedisiplinan", "Membuat terlambat sekolah"},
+                'B');
+
+        // Pertanyaan 2
+        tanya("2. Pukul berapa sebaiknya kita bangun pagi?",
+                new String[]{"04.00-05.00", "10.00-11.00", "12.00-13.00"},
+                'A');
+
+        // Pertanyaan 3
+        tanya("3. Apa yang sebaiknya dilakukan setelah bangun tidur?",
+                new String[]{"Tidur kembali", "Bermain HP", "Merapikan tempat tidur"},
+                'C');
+
+        // Pertanyaan 4
+        tanya("4. Mengapa bangun pagi penting bagi pelajar?",
+                new String[]{"Agar tidak perlu belajar", "Agar tidak terlambat sekolah", "Agar bisa bermain sepanjang hari"},
+                'B');
+
+        // Pertanyaan 5
+        tanya("5. Apa akibat jika sering bangun kesiangan?",
+                new String[]{"Lebih disiplin", "Selalu tepat waktu", "Terburu-buru dan terlambat"},
+                'C');
+
+        System.out.println("=============================");
+        System.out.println("Skor akhir kamu: " + skor + " dari 5");
+        System.out.println("=============================");
+    }
+
+    // Menampilkan satu pertanyaan, membaca jawaban, lalu menampilkan Benar / Salah
+    static void tanya(String pertanyaan, String[] pilihan, char kunci) {
+        System.out.println(pertanyaan);
+        char huruf = 'A';
+        for (String p : pilihan) {
+            System.out.println("   " + huruf + ". " + p);
+            huruf++;
+        }
+
+        char jawaban = bacaJawaban();
+
+        if (jawaban == kunci) {
+            System.out.println(">> Benar\n");
+            skor++;
+        } else {
+            System.out.println(">> Salah (jawaban yang benar: " + kunci + ")\n");
+        }
+    }
+
+    // Memastikan input hanya A, B, atau C
+    static char bacaJawaban() {
+        while (true) {
+            System.out.print("Jawaban kamu (A/B/C): ");
+            String teks = input.nextLine().trim().toUpperCase();
+
+            if (teks.length() == 1 && "ABC".indexOf(teks.charAt(0)) >= 0) {
+                return teks.charAt(0);
+            }
+            System.out.println("Input tidak valid, masukkan A, B, atau C.");
+        }
+    }
+}
